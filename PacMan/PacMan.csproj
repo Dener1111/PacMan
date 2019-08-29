@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,11 +44,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Drawer.cs" />
+    <Compile Include="Classes\Enemy.cs" />
+    <Compile Include="Classes\Input.cs" />
+    <Compile Include="Classes\LevelController.cs" />
+    <Compile Include="Classes\Map.cs" />
+    <Compile Include="Classes\MapCostructor.cs" />
+    <Compile Include="Classes\Pickup.cs" />
+    <Compile Include="Classes\Player.cs" />
+    <Compile Include="Classes\Vector.cs" />
+    <Compile Include="Classes\Wall.cs" />
+    <Compile Include="Enums\EnemyColors.cs" />
+    <Compile Include="Interfaces\ICharacter.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
+    <Compile Include="Interfaces\IObstacle.cs" />
+    <Compile Include="Interfaces\IPickup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

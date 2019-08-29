@@ -1,6 +1,9 @@
-﻿using System;
+﻿using PacMan.Classes;
+using PacMan.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +13,13 @@ namespace PacMan
     {
         static void Main(string[] args)
         {
+            Map map = new Map();
+            MapCostructor.Generate(map, "a.txt");
+            Input input = new Input(map.Player);
+
+            LevelController lc = new LevelController(map, input);
+            lc.Start();
+
         }
     }
 }
