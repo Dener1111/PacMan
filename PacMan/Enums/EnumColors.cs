@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PacMan.Interfaces
+namespace PacMan.Enums
 {
-    public interface ICharacter
+    enum EnumColors
     {
+        Red,
+        Cyan,
+        Orange,
+        Pink
     }
 }

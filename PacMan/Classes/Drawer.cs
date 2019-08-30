@@ -30,7 +30,21 @@ namespace PacMan.Classes
             Console.Write(" ");
         }
 
-        static void SetColors(ConsoleColor color)
+        public static void DrawScore(int pos, int val)
+        {
+            CursorPos(new Vector2(0, pos));
+            SetColors();
+            Console.Write(val);
+        }
+
+        public static void DrawGameOver(int posX = 0, int posY = 0, string str = "GAME OVER")
+        {
+            CursorPos(new Vector2(posX, posY));
+            SetColors();
+            Console.Write(str);
+        }
+
+        static void SetColors(ConsoleColor color = ConsoleColor.White)
         {
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = color;

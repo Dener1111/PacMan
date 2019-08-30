@@ -17,7 +17,7 @@ namespace PacMan.Classes
 
         public Pickup(Vector2 pos)
         {
-            ScoreValue = 1;
+            ScoreValue = 10;
             Graphycs = '.';
             Color = ConsoleColor.Yellow;
             Position = pos;

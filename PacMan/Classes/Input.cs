@@ -13,13 +13,14 @@ namespace PacMan.Classes
     {
         public Player CurrentPlayer { get; set; }
         public bool Stop { get; set; }
-        public Vector2 MoveDir;
+        int timeStepSpeedMS;
 
         ConsoleKeyInfo moveKey;
 
         public Input(Player character)
         {
             CurrentPlayer = character;
+            timeStepSpeedMS = 400;
         }
 
         public void WaitInput(Object stateInfo) => moveKey = Console.ReadKey(true);
@@ -33,26 +34,34 @@ namespace PacMan.Classes
                 switch (moveKey.KeyChar)
                 {
                     case 'w':
-                        LevelController.lc.MoveEntity(CurrentPlayer, Vector.up());
-                        MoveDir = Vector.up();
+                        if(LevelController.lc.MoveEntity(CurrentPlayer, Vector.up()))//change move direction if there wall or something
+                            CurrentPlayer.MoveDir = Vector.up();
+                        else
+                            moveKey = new ConsoleKeyInfo('d', ConsoleKey.D, false, false, false);
                         break;
                     case 's':
-                        LevelController.lc.MoveEntity(CurrentPlayer, Vector.down());
-                        MoveDir = Vector.down();
+                        if(LevelController.lc.MoveEntity(CurrentPlayer, Vector.down()))
+                            CurrentPlayer.MoveDir = Vector.down();
+                        else
+                            moveKey = new ConsoleKeyInfo('a', ConsoleKey.A, false, false, false);
                         break;
                     case 'a':
-                        LevelController.lc.MoveEntity(CurrentPlayer, Vector.left());
-                        MoveDir = Vector.left();
+                        if (LevelController.lc.MoveEntity(CurrentPlayer, Vector.left()))
+                            CurrentPlayer.MoveDir = Vector.left();
+                        else
+                            moveKey = new ConsoleKeyInfo('w', ConsoleKey.W, false, false, false);
                         break;
                     case 'd':
-                        LevelController.lc.MoveEntity(CurrentPlayer, Vector.right());
-                        MoveDir = Vector.right();
+                        if(LevelController.lc.MoveEntity(CurrentPlayer, Vector.right()))
+                            CurrentPlayer.MoveDir = Vector.right();
+                        else
+                            moveKey = new ConsoleKeyInfo('s', ConsoleKey.S, false, false, false);
                         break;
                     default:
                         break;
                 }
 
-                Thread.Sleep(400);
+                Thread.Sleep(timeStepSpeedMS);
 
                 if (Stop)
                     break;

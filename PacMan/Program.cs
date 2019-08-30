@@ -18,8 +18,10 @@ namespace PacMan
             Input input = new Input(map.Player);
 
             LevelController lc = new LevelController(map, input);
-            lc.Start();
 
+            lc.Start();
+            Drawer.DrawGameOver(lc.Map.Width / 2, lc.Map.Height / 2);
+            Console.Read();
         }
     }
 }

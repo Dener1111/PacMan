@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PacMan.Enums
+namespace PacMan.Interfaces
 {
-    enum EnemyColors
+    public interface IEnemy
     {
-        Red,
-        Orange,
-        Cyan,
-        Pink
     }
 }

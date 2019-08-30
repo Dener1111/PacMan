@@ -9,11 +9,11 @@ namespace PacMan.Classes
 {
     class Map
     {
-        //public int Width { get; set; }
-        //public int Height { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public IEnumerable<IEntity> Obstacles { get; set; }
         public IEnumerable<IEntity> Pickups { get; set; }
-        public IEnumerable<Enemy> Characters { get; set; }
+        public IEnumerable<IEntity> Characters { get; set; }
         public Player Player { get; set; }
     }
 }

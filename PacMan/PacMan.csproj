@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Classes\Drawer.cs" />
     <Compile Include="Classes\Enemy.cs" />
+    <Compile Include="Classes\EnemyAI.cs" />
     <Compile Include="Classes\Input.cs" />
     <Compile Include="Classes\LevelController.cs" />
     <Compile Include="Classes\Map.cs" />
@@ -54,8 +55,8 @@
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Vector.cs" />
     <Compile Include="Classes\Wall.cs" />
-    <Compile Include="Enums\EnemyColors.cs" />
-    <Compile Include="Interfaces\ICharacter.cs" />
+    <Compile Include="Enums\EnumColors.cs" />
+    <Compile Include="Interfaces\IEnemy.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IObstacle.cs" />
     <Compile Include="Interfaces\IPickup.cs" />

@@ -15,6 +15,10 @@ namespace PacMan.Classes
         public Map Map { get; set; }
         public Input Input { get; set; }
         public static  List<Vector2> toClear = new List<Vector2>();
+        bool redrawPickup;
+
+        int score;
+
         public bool Stop;
 
         public LevelController(Map map, Input input)
@@ -22,6 +26,9 @@ namespace PacMan.Classes
             lc = this;
             Map = map;
             Input = input;
+            redrawPickup = true;
+
+            score = 0;
 
             Console.CursorVisible = false;
         }
@@ -30,12 +37,34 @@ namespace PacMan.Classes
         {
             ThreadPool.QueueUserWorkItem(Input.Start);
 
+            List<EnemyAI> ai = new List<EnemyAI>();
+            for (int i = 0; i < Map.Characters.Count(); i++)
+            {
+                ai.Add(new EnemyAI { Enemy = (Enemy)Map.Characters.ToList()[i] });
+                ThreadPool.QueueUserWorkItem(ai[i].Start);
+            }
+
             Drawer.DrawArray(Map.Obstacles);
             while (true)
             {
-                Clear();
+                CheckStop();
 
-                Drawer.DrawArray(Map.Pickups);
+                SetEnemyPoints(ai);
+
+                lock(LevelController.lc)
+                    Clear();
+
+                Drawer.DrawScore(Map.Height, score);
+
+                if (redrawPickup)
+                {
+                    redrawPickup = false;
+                    if (Map.Pickups.Count() == 0)
+                        Stop = true;
+                    Drawer.DrawArray(Map.Pickups);
+                }
+
+                Drawer.DrawArray(Map.Characters);
                 Drawer.DrawSingle(Map.Player);
 
                 if (Stop)
@@ -45,14 +74,13 @@ namespace PacMan.Classes
                 }
             }
         }
-
-        //obsolete
+        
         public bool CheckMapBool(IEnumerable<IEntity> arr, Vector2 pos)
         {
             foreach (var item in arr)
                 if (item.Position == pos)
-                    return true;
-            return false;
+                    return false;
+            return true;
         }
 
         public IEntity CheckMapEntity(IEnumerable<IEntity> arr, Vector2 pos)
@@ -63,10 +91,23 @@ namespace PacMan.Classes
             return null;
         }
 
-        public void MoveEntity(IEntity ent, Vector2 dir)
+        public void CheckStop()
+        {
+            foreach (var item in Map.Characters)
+                if (item.Position == Map.Player.Position)
+                    Stop = true;
+        }
+
+        public void SetEnemyPoints(List<EnemyAI> ai)
+        {
+            ai[0].Chase = Map.Player.Position;
+            ai[1].Chase = Map.Player.Position + Map.Player.MoveDir * 2;
+        }
+
+        public bool MoveEntity(IEntity ent, Vector2 dir)
         {
             if (CheckMapEntity(Map.Obstacles, ent.Position + dir) != null)
-                return;
+                return false;
             if(ent is Player)
             {
                 IEntity e = CheckMapEntity(Map.Pickups, ent.Position);
@@ -75,12 +116,14 @@ namespace PacMan.Classes
                     List<IEntity> tmp = new List<IEntity>( Map.Pickups);
                     tmp.Remove(e);
                     Map.Pickups = tmp;
+                    score += (e as IPickup).ScoreValue;
                 }
-                //add to score
             }
-
-            toClear.Add(ent.Position);
+            redrawPickup = true;
+            lock (LevelController.lc)
+                toClear.Add(ent.Position);
             ent.Position = ent.Position + dir;
+            return true;
         }
 
         public void Clear()
