@@ -14,6 +14,9 @@ namespace PacMan.Classes
     {
         public static void Generate(Map map, string fileName)
         {
+            DirectoryInfo dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent;
+            fileName = Path.Combine(dir.FullName, "Levels", fileName);
+
             string[] mapText = LoadFromFile(fileName);
 
             if (mapText == null)

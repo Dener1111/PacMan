@@ -14,7 +14,7 @@ namespace PacMan
         static void Main(string[] args)
         {
             Map map = new Map();
-            MapCostructor.Generate(map, "a.txt");
+            MapCostructor.Generate(map, "lvl1.txt");
             Input input = new Input(map.Player);
 
             LevelController lc = new LevelController(map, input);
